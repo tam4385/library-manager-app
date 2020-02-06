@@ -1,0 +1,28 @@
+extends layout.pug
+
+block content
+    .new-book-container
+        h1 New Book
+        p View, edit and delete books in the library
+        p
+            a.button(href='/books') Back to books
+        if (errors)
+            ul
+                each error in errors
+                    li= error.message
+        form(class="new-book-form" method="post" action="/books/new_book")
+            p
+                label(for='title') Title
+                input#title(name='title' type='text')
+            p
+                label(for='author') Author
+                input#author(name='author' type='text')
+            p
+                label(for='genre') Genre
+                input#genre(name='genre' type='text')
+            p
+                label(for='year') Year
+                input#year(name='year' type='text')
+            p
+                input(type='submit' value='Create New Book' class="button")
+        

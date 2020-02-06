@@ -1,0 +1,25 @@
+extends layout.pug
+
+block content
+    .top-container    
+        h1 Library Content Manager 
+        p Create, update and delete books in your library!
+        a.button(href='/books/new_book' id='new-book-button') Create New Book 
+    .table
+        table(id="table")
+            thead(id='thread')
+                tr
+                    th Title
+                    th Author
+                    th Genre
+                    th Year
+            tbody(id='table-body')
+            each book in books    
+                tr
+                    td
+                        a(href='/books/' + book.id)= book.title
+                    td= book.author
+                    td= book.genre
+                    td= book.year
+    .footer
+        p Thomas McVay
