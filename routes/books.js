@@ -50,12 +50,21 @@ router.get('/:id', asyncHandler(async (req, res) => {
 
 //POST /books/:id - Updates book info in the database.
 router.post('/:id', asyncHandler(async (req, res) => {
-  const book = await Books.findByPk(req.params.id);
-  if (book) {
-    await book.update(req.body);
-    res.redirect('/');
-  } else {
-    res.render('page_not_found')
+  try {
+    const book = await Books.findByPk(req.params.id);
+    if (book) {
+      await book.update(req.body);
+      res.redirect('/');
+    } else {
+      res.render('page_not_found')
+    }
+  } catch (error) {
+    if (error.name === 'SequelizeValidationError') {
+      book = await Books.findByPk(req.params.id);
+      res.render('update_book', { book, errors: error.errors })
+    } else {
+      throw error;
+    }
   }
 }));
 //Post route to delete book
